@@ -1,0 +1,961 @@
+/*
+  Importa fontes do Google Fonts para usar no site.
+  "Bree Serif" é usada nos títulos e "Manrope" no restante do texto.
+*/
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Manrope:wght@400;600;700;800&display=swap");
+
+/*
+  Variáveis CSS: facilitam trocar cores e temas do site.
+  Você pode usar uma variável com var(--nome-da-variavel)
+*/
+:root {
+  --bg-1: #fff8ef;
+  --bg-2: #ffe2c7;
+  --ink: #1f2a37;
+  --ink-soft: #4b5563;
+  --accent: #0f766e;
+  --accent-2: #d97706;
+  --surface: #ffffff;
+  --surface-2: #fffaf2;
+  --line: #eed9bf;
+  --success: #0f766e;
+  --danger: #b91c1c;
+}
+
+/*
+  Faz com que o tamanho dos elementos inclua borda e padding.
+  Ajuda a evitar bugs de layout.
+*/
+* {
+  box-sizing: border-box;
+}
+
+/*
+  Estilo geral do corpo da página: cor de fundo, fonte, etc.
+  O background usa gradientes para dar um visual moderno.
+*/
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at 20% 10%, var(--bg-2), var(--bg-1) 45%), linear-gradient(120deg, #fff7ec 0%, #fffbf4 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/*
+  Efeitos de "bolhas" coloridas no fundo da página.
+  São só decorativos!
+*/
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(2px);
+}
+
+body::before {
+  width: 320px;
+  height: 320px;
+  background: rgba(217, 119, 6, 0.15);
+  top: -100px;
+  left: -80px;
+}
+
+body::after {
+  width: 280px;
+  height: 280px;
+  background: rgba(15, 118, 110, 0.15);
+  bottom: -100px;
+  right: -80px;
+}
+
+/*
+  Centraliza o conteúdo principal e limita a largura máxima.
+*/
+.container {
+  width: min(1080px, 92vw);
+  margin: 30px auto 40px;
+}
+
+/*
+  Seção do cabeçalho com título e subtítulo.
+*/
+.hero {
+  text-align: center;
+  margin-bottom: 22px;
+  animation: fadeUp 0.5s ease;
+}
+
+/*
+  Pequeno destaque visual, tipo "etiqueta".
+*/
+.tag {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.12);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/*
+  Título principal do site.
+*/
+h1 {
+  margin: 0;
+  font-family: "Bree Serif", serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.1;
+}
+
+/*
+  Subtítulo do site.
+*/
+.subtitle {
+  margin: 12px auto 0;
+  max-width: 640px;
+  color: var(--ink-soft);
+}
+
+/*
+  Painel de busca: fundo, borda, sombra e arredondamento.
+*/
+.search-panel {
+  background: linear-gradient(160deg, #fffefb 0%, #fff5e8 100%);
+  border: 1px solid #efdbbe;
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 16px 30px rgba(31, 42, 55, 0.1);
+  animation: fadeUp 0.65s ease;
+}
+
+/*
+  Cabeçalho do painel de busca.
+*/
+.search-head {
+  margin-bottom: 14px;
+  display: grid;
+  gap: 4px;
+}
+
+/*
+  Destaque para "Encontre seu próximo livro".
+*/
+.search-kicker {
+  margin: 0;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 5px 10px;
+  background: #e6faf7;
+  color: #0f766e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/*
+  Título da busca inteligente.
+*/
+.search-head h2 {
+  margin: 0;
+  font-size: 1.26rem;
+}
+
+/*
+  Texto explicativo da busca.
+*/
+.search-head p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+/*
+  Layout do formulário de busca.
+*/
+.search-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/*
+  Estilo dos rótulos dos campos do formulário.
+*/
+.field {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+/*
+  Rótulo principal do campo de busca.
+*/
+.field-main {
+  margin-top: 2px;
+}
+
+/*
+  Estilo básico para campos de texto, listas e botões.
+*/
+input,
+select,
+button {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+}
+
+/*
+  Campos de texto e listas: preenchimento, cor de fundo, etc.
+*/
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+/*
+  Destaque ao focar (clicar ou tabular) em campos e botões.
+*/
+input:focus,
+select:focus,
+button:focus {
+  outline: 2px solid rgba(15, 118, 110, 0.2);
+  outline-offset: 2px;
+}
+
+/*
+  Linha com campo de busca e botões.
+*/
+.query-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+}
+
+/*
+  Grade para os controles extras (idioma, ordenação, etc.).
+*/
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+/*
+  Cada item do grid de controles.
+*/
+.control-item {
+  display: grid;
+  gap: 6px;
+}
+
+/*
+  Item que ocupa a linha inteira no grid.
+*/
+.control-item-full {
+  grid-column: 1 / -1;
+}
+
+/*
+  Botão principal de busca.
+*/
+#searchBtn {
+  padding: 12px 14px;
+  white-space: nowrap;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), #0d9488);
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+/*
+  Efeito ao passar o mouse no botão de busca.
+*/
+#searchBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(15, 118, 110, 0.22);
+}
+
+/*
+  Botão para limpar o campo de busca.
+*/
+.clear-search-btn {
+  padding: 12px 13px;
+  white-space: nowrap;
+  border: none;
+  background: #fff2de;
+  color: #8a4b08;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/*
+  Efeito ao passar o mouse no botão limpar.
+*/
+.clear-search-btn:hover {
+  background: #ffe5bf;
+}
+
+/*
+  Linha de sugestões rápidas de busca (chips).
+*/
+.suggestions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+/*
+  Título das sugestões rápidas.
+*/
+.suggestions-title {
+  font-weight: 700;
+}
+
+/*
+  Botão "chip" de sugestão rápida.
+*/
+.chip {
+  padding: 8px 12px;
+  border: 1px solid #f3c78d;
+  background: #fff2de;
+  color: #8a4b08;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.86rem;
+  transition: background 0.2s ease;
+}
+
+/*
+  Efeito ao passar o mouse no chip.
+*/
+.chip:hover {
+  background: #ffe7c8;
+}
+
+/*
+  Mensagem de status para o usuário (ex: erro, sucesso, carregando).
+*/
+.status {
+  min-height: 28px;
+  margin: 14px 4px 4px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+/*
+  Área para botões de ação do status (ex: tentar novamente).
+*/
+.status-actions {
+  min-height: 36px;
+  margin: 0 4px 10px;
+}
+
+/*
+  Botão para tentar novamente em caso de erro.
+*/
+.retry-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/*
+  Painéis laterais: histórico e favoritos.
+*/
+.mini-panels {
+  margin: 4px 0 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/*
+  Cada painel lateral.
+*/
+.mini-panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fffdf8;
+  padding: 10px;
+}
+
+/*
+  Cabeçalho dos painéis laterais.
+*/
+.mini-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/*
+  Título do painel lateral.
+*/
+.mini-head h2 {
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+/*
+  Botão de ação do painel lateral (ex: limpar histórico).
+*/
+.mini-action {
+  border: none;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 7px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/*
+  Contador de favoritos.
+*/
+.counter {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #e6faf7;
+  color: #0f766e;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+/*
+  Lista de histórico ou favoritos.
+*/
+.mini-list {
+  min-height: 38px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/*
+  Dica ou mensagem auxiliar.
+*/
+.hint {
+  margin: 4px 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+/*
+  Botão de histórico e item de favorito.
+*/
+.history-item,
+.favorite-item {
+  border: 1px solid #f3c78d;
+  background: #fff2de;
+  color: #8a4b08;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+/*
+  Estilo extra para o item de favorito.
+*/
+.favorite-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/*
+  Botão para remover favorito.
+*/
+.remove-fav {
+  border: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #fde68a;
+  color: #7c2d12;
+  cursor: pointer;
+  font-size: 0.72rem;
+  padding: 0;
+}
+
+/*
+  Cor para status de erro.
+*/
+.status.error {
+  color: var(--danger);
+}
+
+/*
+  Cor para status de sucesso.
+*/
+.status.success {
+  color: var(--success);
+}
+
+/*
+  Grade onde aparecem os resultados dos livros.
+*/
+.resultados {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+/*
+  Cartão de cada livro.
+*/
+.livro {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  animation: cardIn 0.35s ease;
+}
+
+/*
+  Imagem de capa do livro.
+*/
+.livro-thumb {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background: #f6efe5;
+}
+
+/*
+  Área de conteúdo do cartão do livro.
+*/
+.livro-conteudo {
+  padding: 12px;
+  display: grid;
+  gap: 7px;
+}
+
+/*
+  Título do livro no cartão.
+*/
+.livro h3 {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+
+/*
+  Informações extras do livro (autor, ano, etc.).
+*/
+.meta {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+/*
+  Link para preview do livro.
+*/
+.livro a {
+  margin-top: 4px;
+  width: fit-content;
+  text-decoration: none;
+  color: #ffffff;
+  background: var(--accent-2);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+/*
+  Efeito ao passar o mouse no link do preview.
+*/
+.livro a:hover {
+  filter: brightness(1.05);
+}
+
+/*
+  Área dos botões de ação do livro (detalhes, favorito, preview).
+*/
+.livro-acoes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/*
+  Botão para abrir detalhes do livro.
+*/
+.detalhes-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #1f2a37;
+  cursor: pointer;
+}
+
+/*
+  Efeito ao passar o mouse no botão de detalhes.
+*/
+.detalhes-btn:hover {
+  background: #111827;
+}
+
+/*
+  Botão para favoritar/desfavoritar livro.
+*/
+.fav-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #8a4b08;
+  background: #fff2de;
+  cursor: pointer;
+}
+
+/*
+  Estilo do botão quando o livro está favoritado.
+*/
+.fav-btn.ativo {
+  color: #ffffff;
+  background: #d97706;
+}
+
+/*
+  Efeito de "skeleton loading" (carregando) nos cards.
+*/
+.skeleton {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #f4ecdf 25%, #fff5e6 50%, #f4ecdf 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+/*
+  Skeleton da imagem do livro.
+*/
+.skeleton-thumb {
+  height: 220px;
+}
+
+/*
+  Skeleton das linhas de texto.
+*/
+.skeleton-line {
+  height: 12px;
+  margin: 8px 12px;
+}
+
+/*
+  Skeleton de linha curta.
+*/
+.skeleton-line.short {
+  width: 60%;
+}
+
+/*
+  Área de paginação (próxima/anterior).
+*/
+.pagination {
+  margin: 18px 0 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/*
+  Botões de paginação.
+*/
+.pagination button {
+  border: none;
+  border-radius: 9px;
+  background: #e7f6f4;
+  color: #0f766e;
+  font-weight: 700;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+
+/*
+  Botão de paginação desabilitado.
+*/
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*
+  Informação da página atual.
+*/
+#pageInfo {
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+/*
+  Fundo escuro do modal de detalhes.
+*/
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 40;
+}
+
+/*
+  Esconde o modal quando não está ativo.
+*/
+.modal-overlay[hidden] {
+  display: none !important;
+}
+
+/*
+  Janela de detalhes do livro (modal).
+*/
+.modal {
+  width: min(860px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #fffdf8;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+  position: relative;
+  animation: fadeUp 0.2s ease;
+}
+
+/*
+  Botão para fechar o modal.
+*/
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 999px;
+  background: #fff2de;
+  color: #7c2d12;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/*
+  Layout do conteúdo do modal (imagem + texto).
+*/
+.modal-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 18px;
+  padding: 20px;
+}
+
+/*
+  Imagem de capa no modal.
+*/
+.modal-cover {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  background: #f6efe5;
+}
+
+/*
+  Área de texto do modal.
+*/
+.modal-content {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+/*
+  Fonte do livro no modal.
+*/
+.modal-source {
+  margin: 0;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #0f766e;
+  background: #e6faf7;
+}
+
+/*
+  Título do livro no modal.
+*/
+.modal-content h2 {
+  margin: 0;
+  font-family: "Bree Serif", serif;
+  font-size: 1.65rem;
+  line-height: 1.2;
+}
+
+/*
+  Informações extras e descrição no modal.
+*/
+.modal-meta,
+.modal-description {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+/*
+  Descrição do livro no modal.
+*/
+.modal-description {
+  margin-top: 4px;
+}
+
+/*
+  Link para preview do livro no modal.
+*/
+.modal-preview {
+  margin-top: 6px;
+  width: fit-content;
+  text-decoration: none;
+  color: #ffffff;
+  background: #0f766e;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/*
+  Estilo do link de preview quando está desabilitado.
+*/
+.modal-preview.disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/*
+  Animação de "subir" ao aparecer.
+*/
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  Animação de entrada dos cards de livro.
+*/
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/*
+  Animação do efeito skeleton.
+*/
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/*
+  Responsividade: adapta o layout para telas pequenas (celular/tablet).
+*/
+@media (max-width: 760px) {
+  .container {
+    margin-top: 20px;
+  }
+
+  .search-panel {
+    padding: 14px;
+  }
+
+  .query-row {
+    grid-template-columns: 1fr;
+  }
+
+  .control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resultados {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .livro-thumb {
+    height: 200px;
+  }
+
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-cover {
+    max-width: 220px;
+  }
+}

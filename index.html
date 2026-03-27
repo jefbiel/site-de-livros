@@ -1,0 +1,188 @@
+<!--
+  Este é o arquivo principal do site. Ele define toda a estrutura da página.
+  Os comentários abaixo explicam cada parte para quem está começando em HTML.
+-->
+<!DOCTYPE html>
+<!-- O atributo lang define o idioma principal da página -->
+<html lang="pt-BR">
+<head>
+  <!-- Define o conjunto de caracteres para acentuação funcionar corretamente -->
+  <meta charset="UTF-8">
+  <!-- Faz o site se adaptar a celulares e tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Título que aparece na aba do navegador -->
+  <title>Explorador de Livros</title>
+  <!-- Importa o arquivo de estilos CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!--
+    O <main> é o conteúdo principal do site.
+    Aqui dentro ficam todas as seções visíveis para o usuário.
+  -->
+  <main class="container">
+    <!-- Cabeçalho com o título e subtítulo -->
+    <header class="hero">
+      <h1>Explorador de Livros</h1>
+      <p class="subtitle">Pesquise livros, filtre resultados e navegue por p&aacute;ginas.</p>
+    </header>
+
+    <!-- Seção de busca: onde o usuário faz pesquisas -->
+    <section class="search-panel" aria-label="Painel de busca">
+      <div class="search-head">
+        <p class="search-kicker">Encontre seu proximo livro</p>
+        <h2>Busca inteligente</h2>
+        <p>Digite titulo, autor ou tema. A busca tambem considera aproximacoes para pequenos erros.</p>
+      </div>
+
+      <!-- Formulário de busca -->
+      <form id="searchForm" class="search-form">
+        <!-- Campo de texto para digitar o que quer buscar -->
+        <label class="field field-main" for="searchInput">Livro ou assunto</label>
+
+        <!-- Linha com o campo de busca e botões -->
+        <div class="query-row">
+          <input type="text" id="searchInput" placeholder="Ex.: Dom Casmurro, JavaScript, fantasia" autocomplete="off">
+          <button id="searchBtn" type="submit">Buscar livros</button>
+          <button id="clearSearchBtn" class="clear-search-btn" type="button">Limpar</button>
+        </div>
+
+        <!-- Opções extras: idioma, ordenação, itens por página, gênero -->
+        <div class="control-grid">
+          <div class="control-item">
+            <label class="field" for="languageSelect">Idioma</label>
+            <select id="languageSelect">
+              <option value="all">Todos</option>
+              <option value="pt" selected>Portugu&ecirc;s</option>
+              <option value="en">Ingl&ecirc;s</option>
+              <option value="es">Espanhol</option>
+            </select>
+          </div>
+
+          <div class="control-item">
+            <label class="field" for="orderSelect">Ordena&ccedil;&atilde;o</label>
+            <select id="orderSelect">
+              <option value="relevance" selected>Relev&acirc;ncia</option>
+              <option value="newest">Mais novos</option>
+            </select>
+          </div>
+
+          <div class="control-item">
+            <label class="field" for="limitSelect">Itens por p&aacute;gina</label>
+            <select id="limitSelect">
+              <option value="32" selected>32</option>
+              <option value="64">64</option>
+              <option value="128">128</option>
+            </select>
+          </div>
+
+          <div class="control-item control-item-full">
+            <label class="field" for="genreSelect">G&ecirc;nero</label>
+            <select id="genreSelect">
+              <option value="all" selected>Todos os g&ecirc;neros</option>
+              <option value="Livros">Livros</option>
+              <option value="Administracao, Negocios e Economia">Administra&ccedil;&atilde;o, Neg&oacute;cios e Economia</option>
+              <option value="Arte, Cinema e Fotografia">Arte, Cinema e Fotografia</option>
+              <option value="Artesanato, Casa e Estilo de Vida">Artesanato, Casa e Estilo de Vida</option>
+              <option value="Autoajuda">Autoajuda</option>
+              <option value="Biografias e Historias Reais">Biografias e Hist&oacute;rias Reais</option>
+              <option value="Ciencias">Ci&ecirc;ncias</option>
+              <option value="Computacao, Informatica e Midias Digitais">Computa&ccedil;&atilde;o, Inform&aacute;tica e M&iacute;dias Digitais</option>
+              <option value="Cronicas, Humor e Entretenimento">Cr&ocirc;nicas, Humor e Entretenimento</option>
+              <option value="Direito">Direito</option>
+              <option value="Educacao, Referencia e Didaticos">Educa&ccedil;&atilde;o, Refer&ecirc;ncia e Did&aacute;ticos</option>
+              <option value="Engenharia e Transporte">Engenharia e Transporte</option>
+              <option value="Erotico">Er&oacute;tico</option>
+              <option value="Esportes e Lazer">Esportes e Lazer</option>
+              <option value="Fantasia, Horror e Ficcao Cientifica">Fantasia, Horror e Fic&ccedil;&atilde;o Cient&iacute;fica</option>
+              <option value="Gastronomia e Culinaria">Gastronomia e Culin&aacute;ria</option>
+              <option value="Historia">Hist&oacute;ria</option>
+              <option value="HQs, Mangas e Graphic Novels">HQs, Mang&aacute;s e Graphic Novels</option>
+              <option value="Infantil">Infantil</option>
+              <option value="LGBTQ+">LGBTQ+</option>
+              <option value="Literatura e Ficcao">Literatura e Fic&ccedil;&atilde;o</option>
+              <option value="Medicina">Medicina</option>
+              <option value="Policial, Suspense e Misterio">Policial, Suspense e Mist&eacute;rio</option>
+              <option value="Politica, Filosofia e Ciencias Sociais">Pol&iacute;tica, Filosofia e Ci&ecirc;ncias Sociais</option>
+              <option value="Religiao e Espiritualidade">Religi&atilde;o e Espiritualidade</option>
+              <option value="Romance">Romance</option>
+              <option value="Saude e Familia">Sa&uacute;de e Fam&iacute;lia</option>
+              <option value="Turismo e Guias de Viagem">Turismo e Guias de Viagem</option>
+              <option value="Livros Internacionais">Livros Internacionais</option>
+              <option value="Jovens e Adolescentes">Jovens e Adolescentes</option>
+            </select>
+          </div>
+        </div>
+      </form>
+
+      <!-- Sugestões de busca rápida (chips) -->
+      <div class="suggestions" aria-label="Buscas r&aacute;pidas">
+        <span class="suggestions-title">Buscas r&aacute;pidas</span>
+        <button class="chip" type="button" data-query="literatura brasileira">Literatura brasileira</button>
+        <button class="chip" type="button" data-query="programacao iniciante">Programa&ccedil;&atilde;o iniciante</button>
+        <button class="chip" type="button" data-query="romance">Romance</button>
+      </div>
+    </section>
+
+    <!-- Mensagem de status para o usuário (ex: erros, carregando, etc.) -->
+    <p id="status" class="status" aria-live="polite"></p>
+    <!-- Botão para tentar novamente em caso de erro -->
+    <div class="status-actions">
+      <button id="retryBtn" class="retry-btn" type="button" hidden>Tentar novamente</button>
+    </div>
+
+    <!-- Painéis laterais: histórico de buscas e favoritos -->
+    <section class="mini-panels" aria-label="Recursos extras">
+      <article class="mini-panel">
+        <div class="mini-head">
+          <h2>Ultimas buscas</h2>
+          <button id="clearHistoryBtn" class="mini-action" type="button">Limpar</button>
+        </div>
+        <div id="historyList" class="mini-list"></div>
+      </article>
+
+      <article class="mini-panel">
+        <div class="mini-head">
+          <h2>Favoritos</h2>
+          <span id="favoritesCount" class="counter">0</span>
+        </div>
+        <div id="favoritosList" class="mini-list"></div>
+      </article>
+    </section>
+
+    <!-- Onde os resultados dos livros aparecem -->
+    <section id="resultados" class="resultados" aria-label="Resultados da busca"></section>
+
+    <!-- Navegação de páginas (paginação) -->
+    <nav id="pagination" class="pagination" aria-label="Paginas de resultados">
+      <button id="prevBtn" type="button">Anterior</button>
+      <span id="pageInfo">P&aacute;gina 1</span>
+      <button id="nextBtn" type="button">Pr&oacute;xima</button>
+    </nav>
+  </main>
+
+  <!-- Modal (janela que aparece por cima) para mostrar detalhes do livro -->
+  <div id="modalOverlay" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="modalClose" class="modal-close" type="button" aria-label="Fechar detalhes">&times;</button>
+      <div class="modal-grid">
+        <img id="modalCover" class="modal-cover" src="" alt="Capa do livro selecionado">
+        <div class="modal-content">
+          <p id="modalSource" class="modal-source"></p>
+          <h2 id="modalTitle">Detalhes do livro</h2>
+          <p id="modalAuthors" class="modal-meta"></p>
+          <p id="modalYear" class="modal-meta"></p>
+          <p id="modalPublisher" class="modal-meta"></p>
+          <p id="modalLanguage" class="modal-meta"></p>
+          <p id="modalCategories" class="modal-meta"></p>
+          <p id="modalDescription" class="modal-description"></p>
+          <a id="modalPreview" class="modal-preview" href="#" target="_blank" rel="noopener noreferrer">Abrir pagina do livro</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Importa o arquivo JavaScript que faz o site funcionar -->
+  <script src="script.js"></script>
+</body>
+</html>

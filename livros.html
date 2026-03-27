@@ -1,0 +1,241 @@
+<!--
+  Este é um exemplo de página HTML simples para buscar livros usando a API do Google Books.
+  Os comentários abaixo explicam cada parte do código para iniciantes.
+-->
+<!DOCTYPE html>
+<!-- Define o idioma principal da página -->
+<html lang="pt-BR">
+<head>
+  <!-- Define o conjunto de caracteres para acentuação funcionar corretamente -->
+  <meta charset="UTF-8">
+  <!-- Faz o site se adaptar a celulares e tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Título que aparece na aba do navegador -->
+  <title>Livros Simples</title>
+  <!--
+    CSS: Estilos para deixar a página mais bonita.
+    As variáveis (ex: --bg) facilitam mudar as cores do site.
+  -->
+  <style>
+    /* Variáveis de cor para facilitar a manutenção do tema */
+    :root {
+      --bg: #f8f6f2;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5dccf;
+      --primary: #0f766e;
+    }
+
+    /* Faz com que o tamanho dos elementos inclua borda e padding */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Estilo geral do corpo da página */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* Centraliza o conteúdo principal e limita a largura */
+    main {
+      width: min(900px, 92vw);
+      margin: 28px auto;
+    }
+
+    /* Título principal */
+    h1 {
+      margin: 0 0 14px;
+      font-size: 1.9rem;
+    }
+
+    /* Linha com campo de busca e botão */
+    .search {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    /* Estilo do campo de texto */
+    input {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
+      background: #fff;
+    }
+
+    /* Estilo do botão de busca */
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Mensagem de status para o usuário */
+    #status {
+      min-height: 24px;
+      margin: 6px 0 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* Onde os livros encontrados aparecem */
+    #lista {
+      display: grid;
+      gap: 10px;
+    }
+
+    /* Cada livro mostrado como um cartão */
+    .livro {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      padding: 12px;
+    }
+
+    /* Título do livro */
+    .livro h2 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    /* Informações do livro (autor, ano) */
+    .livro p {
+      margin: 4px 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+  </style>
+</head>
+<body>
+  <!--
+    Conteúdo principal do site.
+    Inclui título, campo de busca, status e lista de livros.
+  -->
+  <main>
+    <!-- Título do site -->
+    <h1>Busca simples de livros</h1>
+
+    <!-- Linha com campo de texto e botão -->
+    <div class="search">
+      <!-- Campo para digitar o nome do livro -->
+      <input id="buscaInput" type="text" placeholder="Digite o nome do livro" autocomplete="off">
+      <!-- Botão para iniciar a busca -->
+      <button id="buscarBtn" type="button">Buscar</button>
+    </div>
+
+    <!-- Mensagem de status para o usuário -->
+    <p id="status">Digite um termo para buscar livros.</p>
+    <!-- Onde os resultados dos livros vão aparecer -->
+    <section id="lista" aria-label="Lista de livros"></section>
+  </main>
+
+  <!--
+    JavaScript: faz a busca dos livros e mostra na tela.
+    Os comentários explicam cada parte do código.
+  -->
+  <script>
+    // Pega referências dos elementos do HTML para usar no JS
+    const buscaInput = document.getElementById("buscaInput");
+    const buscarBtn = document.getElementById("buscarBtn");
+    const statusEl = document.getElementById("status");
+    const listaEl = document.getElementById("lista");
+
+    // Limpa a lista de livros mostrados na tela
+    function limparLista() {
+      listaEl.innerHTML = "";
+    }
+
+    // Cria o elemento visual (cartão) de um livro
+    function criarLivro(item) {
+      const info = item.volumeInfo || {};
+      const titulo = info.title || "Sem titulo";
+      const autores = info.authors ? info.authors.join(", ") : "Autor desconhecido";
+      const ano = info.publishedDate ? info.publishedDate.slice(0, 4) : "Ano nao informado";
+
+      const artigo = document.createElement("article");
+      artigo.className = "livro";
+      artigo.innerHTML = "\n        <h2>" + titulo + "</h2>\n        <p><strong>Autor(es):</strong> " + autores + "</p>\n        <p><strong>Ano:</strong> " + ano + "</p>\n      ";
+      return artigo;
+    }
+
+    // Função principal: busca livros na API do Google Books e mostra na tela
+    async function buscarLivrosSimples() {
+      const termo = buscaInput.value.trim();
+
+      // Se o campo estiver vazio, mostra mensagem e para
+      if (!termo) {
+        statusEl.textContent = "Digite algo para pesquisar.";
+        limparLista();
+        return;
+      }
+
+      // Mostra mensagem de carregando
+      statusEl.textContent = "Buscando...";
+      limparLista();
+
+      // Tenta buscar os livros na internet
+      try {
+        // Monta os parâmetros da busca para a API
+        const params = new URLSearchParams({
+          q: termo,
+          maxResults: "20",
+          printType: "books"
+        });
+
+        // Monta a URL da API com os parâmetros
+        const url = "https://www.googleapis.com/books/v1/volumes?" + params.toString();
+        // Faz a requisição para a API do Google Books
+        const resposta = await fetch(url);
+
+        // Se a resposta não for OK, dá erro
+        if (!resposta.ok) {
+          throw new Error("Falha na API");
+        }
+
+        // Converte a resposta para JSON (objeto JS)
+        const data = await resposta.json();
+        // Pega a lista de livros encontrados (ou vazio)
+        const itens = data.items || [];
+
+        // Se não achou nenhum livro, mostra mensagem
+        if (itens.length === 0) {
+          statusEl.textContent = "Nenhum livro encontrado.";
+          return;
+        }
+
+        // Para cada livro encontrado, cria e mostra na tela
+        itens.forEach((item) => {
+          listaEl.appendChild(criarLivro(item));
+        });
+
+        // Mostra quantos livros foram encontrados
+        statusEl.textContent = "Mostrando " + itens.length + " livro(s).";
+      // Se der erro na busca, mostra mensagem de erro
+      } catch (erro) {
+        statusEl.textContent = "Erro ao buscar livros. Tente novamente.";
+        console.error(erro);
+      }
+    }
+
+    // Quando clicar no botão, faz a busca
+    buscarBtn.addEventListener("click", buscarLivrosSimples);
+    // Quando apertar Enter no campo, faz a busca
+    buscaInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        buscarLivrosSimples();
+      }
+    });
+  </script>
+</body>
+</html>
